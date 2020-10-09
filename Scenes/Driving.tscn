@@ -1,0 +1,68 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Textures/hdrihaven_com_kiara_3_morning.jpg" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/terrain_texture.tres" type="Material" id=2]
+[ext_resource path="res://Scripts/ARVROrigin2.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Car 1.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/track-base.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Car 1.tscn" type="PackedScene" id=6]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="PlaneShape" id=2]
+
+[sub_resource type="PlaneMesh" id=3]
+material = ExtResource( 2 )
+size = Vector2( 1000, 1000 )
+subdivide_width = 10
+subdivide_depth = 10
+
+[sub_resource type="PanoramaSky" id=4]
+panorama = ExtResource( 1 )
+
+[sub_resource type="Environment" id=5]
+background_mode = 2
+background_sky = SubResource( 4 )
+
+[node name="Driving" type="Spatial"]
+
+[node name="Car" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 52.9979, 25.9059, 22.0345 )
+
+[node name="Car 1" parent="Car" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9869, -23.8632, 0 )
+script = ExtResource( 4 )
+
+[node name="ARVROrigin2" type="ARVROrigin" parent="Car/Car 1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74335, 1.02209 )
+script = ExtResource( 3 )
+
+[node name="ARVRCamera" type="ARVRCamera" parent="Car/Car 1/ARVROrigin2"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+physics_material_override = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.210938, -1.37216, 0.285522 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 2 )
+
+[node name="Sun" type="DirectionalLight" parent="."]
+transform = Transform( 0.888873, 0.446255, -0.103738, -0.0345112, 0.290999, 0.956101, 0.456853, -0.846272, 0.274062, -146.954, 105.209, 127.037 )
+shadow_enabled = true
+
+[node name="Track" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7517, 3.6601, -16.4478 )
+
+[node name="Path" parent="Track" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.220703, -0.747314, -0.403503 )
+track_width = 8.0
+lower_ground_width = 12.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 5 )
