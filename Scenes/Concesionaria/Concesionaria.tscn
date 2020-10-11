@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Car 2.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Concesionaria/Concesionaria.gd" type="Script" id=5]
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 3 )
 metallic = 1.0
 ao_enabled = true
@@ -15,8 +15,8 @@ ao_on_uv2 = false
 ao_texture_channel = 0
 uv1_scale = Vector3( 50, 50, 10 )
 
-[sub_resource type="PlaneMesh" id=1]
-material = SubResource( 2 )
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
 size = Vector2( 200, 200 )
 
 [node name="Concesionaria" type="Spatial"]
@@ -32,6 +32,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3602, 0, 0 )
 Car = ExtResource( 4 )
 
 [node name="CSGMesh" type="CSGMesh" parent="."]
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]

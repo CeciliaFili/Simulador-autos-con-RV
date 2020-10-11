@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Textures/TexturesCom_RockGrassy0142_2_seamless_N.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/TexturesCom_Roads0069_1_seamless_N.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Textures/TexturesCom_Roads0069_1_seamless_S.jpg" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/TexturesCom_RockGrassy0142_2_seamless_S.jpg" type="Texture" id=4]
+[ext_resource path="res://Assets/World/World.glb" type="PackedScene" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 4 )
+normal_enabled = true
+normal_scale = 1.5
+normal_texture = ExtResource( 1 )
+uv1_scale = Vector3( 5, 5, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 3 )
+normal_enabled = true
+normal_scale = 5.82
+normal_texture = ExtResource( 2 )
+uv1_scale = Vector3( 2, 2, 0 )
+uv1_offset = Vector3( -1.584, 1.96, 0 )
+
+[node name="World" instance=ExtResource( 5 )]
+
+[node name="Plane" parent="." index="2"]
+material/0 = SubResource( 1 )
+
+[node name="Cube" parent="." index="4"]
+material/0 = SubResource( 2 )

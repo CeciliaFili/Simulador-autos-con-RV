@@ -1,16 +1,15 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Scenes/Car 1.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/ARVROrigin2.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Driving/Driving.gd" type="Script" id=3]
-[ext_resource path="res://Scripts/Car 1.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Textures/hdrihaven_com_kiara_3_morning.jpg" type="Texture" id=5]
 [ext_resource path="res://Assets/Textures/terrain_texture.tres" type="Material" id=6]
 [ext_resource path="res://Scenes/track-base.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Driving/World.tscn" type="PackedScene" id=8]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
-[sub_resource type="PlaneShape" id=2]
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 498.884, 0.504885, 500.192 )
 
 [sub_resource type="PlaneMesh" id=3]
 material = ExtResource( 6 )
@@ -24,30 +23,33 @@ panorama = ExtResource( 5 )
 [sub_resource type="Environment" id=5]
 background_mode = 2
 background_sky = SubResource( 4 )
+ambient_light_color = Color( 0.580392, 0.643137, 0.937255, 1 )
+ambient_light_energy = 2.0
+ssao_enabled = true
+ssao_intensity = 5.0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 75.0
+dof_blur_far_amount = 0.08
+dof_blur_far_quality = 2
+glow_enabled = true
+glow_intensity = 1.0
+adjustment_enabled = true
+adjustment_contrast = 1.25
+adjustment_saturation = 1.25
 
 [node name="Driving" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="CarPoint" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 52.9979, 25.9059, 22.0345 )
-
-[node name="Car 1" parent="CarPoint" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9869, -23.8632, 0 )
-visible = false
-script = ExtResource( 4 )
-
-[node name="ARVROrigin2" type="ARVROrigin" parent="CarPoint/Car 1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74335, 1.02209 )
-script = ExtResource( 2 )
-
-[node name="ARVRCamera" type="ARVRCamera" parent="CarPoint/Car 1/ARVROrigin2"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 44.8336, 2.58058, 22.0345 )
 
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+visible = false
 physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.86754, 0 )
 shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Ground"]
@@ -56,16 +58,17 @@ mesh = SubResource( 3 )
 material/0 = ExtResource( 6 )
 
 [node name="Sun" type="DirectionalLight" parent="."]
-transform = Transform( 0.888873, 0.446255, -0.103738, -0.0345112, 0.290999, 0.956101, 0.456853, -0.846272, 0.274062, -146.954, 105.209, 127.037 )
+transform = Transform( 0.888873, 0.446256, -0.103738, -0.0345112, 0.290999, 0.956101, 0.456853, -0.846272, 0.274062, -146.954, 105.209, 127.037 )
 shadow_enabled = true
 
 [node name="Track" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7517, 3.6601, -16.4478 )
+visible = false
 
 [node name="Path" parent="Track" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.220703, -0.747314, -0.403503 )
-track_width = 8.0
-lower_ground_width = 12.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 5 )
+
+[node name="World" parent="." instance=ExtResource( 8 )]

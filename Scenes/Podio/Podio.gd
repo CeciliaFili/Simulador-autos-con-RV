@@ -9,6 +9,8 @@ func _ready():
 
 func focus_camera():
 	$Camera_Point/Camera.current = true
+	Singleton.Car = Car
 
 func unfocus_camera():
 	$Camera_Point/Camera.current = false
+	Singleton.Car = Car

@@ -8,9 +8,10 @@ extends Spatial
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var car = Singleton.Car.instance()
-	print(car)
-	$CarPoint.add_child(car)
+	var car := Singleton.Car.instance()
+	car.translation = $CarPoint.translation
+	add_child(car)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
