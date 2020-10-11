@@ -9,9 +9,16 @@
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 4 )
 normal_enabled = true
-normal_scale = 1.5
+normal_scale = 5.0
 normal_texture = ExtResource( 1 )
-uv1_scale = Vector3( 5, 5, 1 )
+ao_enabled = true
+ao_light_affect = 0.0
+ao_on_uv2 = false
+ao_texture_channel = 0
+refraction_enabled = true
+refraction_scale = 0.05
+refraction_texture_channel = 0
+uv1_scale = Vector3( 200, 200, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 3 )
