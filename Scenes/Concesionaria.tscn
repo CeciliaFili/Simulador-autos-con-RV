@@ -1,11 +1,11 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Concesionaria.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/ARVROriginCon.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Human.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Textures/TexturesCom_FloorsRegular0193_1_seamless_S.jpg" type="Texture" id=4]
 [ext_resource path="res://Scenes/Car 2.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Car 1.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scripts/Model 1.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Podio/Podio.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scripts/Model 2.gd" type="Script" id=8]
 [ext_resource path="res://Assets/Textures/autoshop_01_1k.jpg" type="Texture" id=9]
 
@@ -30,32 +30,24 @@ height = 1.0
 radius = 3.0
 height = 3.5
 
-[sub_resource type="SpatialMaterial" id=6]
-albedo_color = Color( 0.776471, 0.768627, 0.768627, 1 )
-metallic = 0.7
-metallic_specular = 0.7
-
-[sub_resource type="CylinderMesh" id=7]
-material = SubResource( 6 )
-top_radius = 3.0
-bottom_radius = 3.0
-height = 1.0
-
-[sub_resource type="CylinderShape" id=8]
-radius = 3.0
-height = 3.5
-
-[sub_resource type="PanoramaSky" id=9]
+[sub_resource type="PanoramaSky" id=6]
 panorama = ExtResource( 9 )
 
-[sub_resource type="Environment" id=10]
+[sub_resource type="Environment" id=7]
 background_mode = 2
-background_sky = SubResource( 9 )
+background_sky = SubResource( 6 )
 background_sky_custom_fov = 51.4
 tonemap_mode = 2
 tonemap_exposure = 1.15
 tonemap_white = 6.0
 adjustment_enabled = true
+
+[sub_resource type="PlaneMesh" id=8]
+size = Vector2( 200, 200 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 4 )
+uv1_scale = Vector3( 10, 10, 5 )
 
 [node name="Concesionaria" type="Spatial"]
 script = ExtResource( 1 )
@@ -80,21 +72,7 @@ script = ExtResource( 2 )
 [node name="ARVRCamera" type="ARVRCamera" parent="Human/ARVROrigin"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0986328, -0.294556 )
 
-[node name="Model 1" type="Spatial" parent="."]
-script = ExtResource( 7 )
-
-[node name="Model 1" parent="Model 1" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mode = 1
-
-[node name="Platform1" type="MeshInstance" parent="Model 1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-mesh = SubResource( 4 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Model 1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0 )
-shape = SubResource( 5 )
+[node name="Model 1" parent="." instance=ExtResource( 6 )]
 
 [node name="Model 2" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0 )
@@ -105,12 +83,16 @@ transform = Transform( 1, 0, 0, 0, 0.999731, 0.0231933, 0, -0.0231933, 0.999731,
 
 [node name="Platform2" type="MeshInstance" parent="Model 2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Model 2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 10 )
+environment = SubResource( 7 )
+
+[node name="CSGMesh" type="CSGMesh" parent="."]
+mesh = SubResource( 8 )
+material = SubResource( 9 )
