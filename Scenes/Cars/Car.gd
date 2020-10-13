@@ -53,15 +53,25 @@ func _physics_process(delta):
 	if (brake_val < 0.0):
 		brake_val = 0.0
 	
+	if not Singleton.state.connected:
 	# overrules for keyboard
-	if Input.is_action_pressed("ui_up"):
-		throttle_val = 1.0
-	if Input.is_action_pressed("ui_down"):
-		brake_val = 1.0
-	if Input.is_action_pressed("ui_left"):
-		steer_val = 1.0
-	elif Input.is_action_pressed("ui_right"):
-		steer_val = -1.0
+		if Input.is_action_pressed("ui_up"):
+			throttle_val = 1.0
+		if Input.is_action_pressed("ui_down"):
+			brake_val = 1.0
+		if Input.is_action_pressed("ui_left"):
+			steer_val = 1.0
+		elif Input.is_action_pressed("ui_right"):
+			steer_val = -1.0
+	else:
+		if Singleton.command.up:
+			throttle_val = 1.0
+		if Singleton.command.down:
+			brake_val = 1.0
+		if Singleton.command.left:
+			steer_val = 1.0
+		elif Singleton.command.right:
+			steer_val = -1.0
 	
 	# check if we need to be in reverse
 	if (had_throttle_or_brake_input == false and brake_val > 0.0 and current_speed_mps < 1.0):
