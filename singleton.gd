@@ -15,22 +15,21 @@ var payload := {
 	"crash": false
 }
 
-var modelo_auto := 0
 var Car: PackedScene = preload("res://Scenes/Cars/Car 1.tscn")
 
 # The port we will listen to
-const PORT = 9080
+const PORT := 9080
 # Our WebSocketServer instance
-var _server
+var _server := WebSocketServer.new()
 
 func _ready():
-	_server = WebSocketServer.new()
 	_server.connect("client_connected", self, "_connected")
 	_server.connect("client_disconnected", self, "_disconnected")
 	_server.connect("client_close_request", self, "_close_request")
 	_server.connect("data_received", self, "_on_data")
 	# Start listening on the given port.
 	var err = _server.listen(PORT)
+	print(err)
 	if err != OK:
 		print("Unable to start server")
 		set_process(false)
@@ -52,5 +51,5 @@ func _on_data(id):
 
 func _process(_delta):
 	if state.connected:
-		_server.get_peer(state.id).put_packet(JSON.print(payload))
+		_server.get_peer(state.id).put_packet(JSON.print(payload).to_utf8())
 		_server.poll()
