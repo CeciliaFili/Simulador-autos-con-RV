@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Cars/Caterham/Caterham.gltf" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Cars/Car.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.639271, 0.33229, 1.27622 )
+
+[node name="Caterham" instance=ExtResource( 1 )]
+mass = 58.6735
+script = ExtResource( 2 )
+
+[node name="Delantera_izq" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.853853, 0.318476, 1.27463 )
+use_as_steering = true
+wheel_radius = 0.32
+wheel_rest_length = 0.07
+suspension_travel = 0.07
+suspension_stiffness = 40.0
+damping_compression = 0.8
+
+[node name="Delantera_izq" parent="Delantera_izq" index="0"]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )
+
+[node name="Trasera_izq" parent="." index="7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933848, 0.318477, -1.25496 )
+use_as_traction = true
+wheel_radius = 0.32
+wheel_rest_length = 0.07
+suspension_travel = 0.07
+suspension_stiffness = 40.0
+damping_compression = 0.8
+
+[node name="Trasera_izq" parent="Trasera_izq" index="0"]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )
+
+[node name="Trasera_der" parent="." index="8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.931563, 0.318477, -1.25496 )
+use_as_traction = true
+wheel_radius = 0.32
+wheel_rest_length = 0.07
+suspension_travel = 0.07
+suspension_stiffness = 40.0
+damping_compression = 0.8
+
+[node name="Trasera_der" parent="Trasera_der" index="0"]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )
+
+[node name="Delantera_der" parent="." index="9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.856466, 0.318476, 1.27463 )
+use_as_steering = true
+wheel_radius = 0.32
+wheel_rest_length = 0.07
+suspension_travel = 0.07
+suspension_stiffness = 40.0
+damping_compression = 0.8
+
+[node name="Delantera_der" parent="Delantera_der" index="0"]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.553, 0 )
+shape = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="." index="11"]
+transform = Transform( -1, -1.66811e-08, 8.58166e-08, 0, 0.981627, 0.190809, -8.74228e-08, 0.190809, -0.981627, 0, 3.957, -4.377 )
+fov = 80.0
