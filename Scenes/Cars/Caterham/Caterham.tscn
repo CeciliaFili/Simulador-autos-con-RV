@@ -9,7 +9,7 @@
 extents = Vector3( 0.639271, 0.33229, 1.27622 )
 
 [node name="Caterham" instance=ExtResource( 1 )]
-mass = 58.6735
+mass = 71.4286
 script = ExtResource( 2 )
 
 [node name="Delantera_izq" parent="." index="6"]
