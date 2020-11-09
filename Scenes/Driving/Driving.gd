@@ -8,9 +8,11 @@ extends Spatial
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Singleton.state.driving = true
 	var car := Singleton.Car.instance()
 	car.translation = $CarPoint.translation
 	add_child(car)
+	
 	
 
 
