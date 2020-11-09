@@ -1,8 +1,6 @@
 [gd_scene format=2]
 
 [node name="ARVROrigin" type="ARVROrigin"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26133, 2.92892, 1.69801 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.231239, 1.22864, -1.01991 )
 
 [node name="ARVRCamera" type="ARVRCamera" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
-far = 1000.0

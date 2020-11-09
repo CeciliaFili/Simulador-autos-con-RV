@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/Cars/Car 1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Concesionaria/Concesionaria.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Podio/Podio.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Textures/TexturesCom_MetalFloorsBare0063_2_seamless_S.jpg" type="Texture" id=3]
-[ext_resource path="res://Scenes/Cars/Car 2.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Concesionaria/Concesionaria.gd" type="Script" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 3 )
@@ -20,16 +18,14 @@ material = SubResource( 1 )
 size = Vector2( 200, 200 )
 
 [node name="Concesionaria" type="Spatial"]
-script = ExtResource( 5 )
+script = ExtResource( 1 )
 
 [node name="Podiums" type="Spatial" parent="."]
 
 [node name="Podio" parent="Podiums" instance=ExtResource( 2 )]
-Car = ExtResource( 1 )
 
 [node name="Podio2" parent="Podiums" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3602, 0, 0 )
-Car = ExtResource( 4 )
 
 [node name="CSGMesh" type="CSGMesh" parent="."]
 mesh = SubResource( 2 )

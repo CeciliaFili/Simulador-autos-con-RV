@@ -15,9 +15,8 @@ var command := {
 var payload := {
 	"crash": false
 }
-
-
-var Car: PackedScene = preload("res://Scenes/Cars/Car 1.tscn")
+var Car: PackedScene = preload("res://Scenes/Cars/Caterham/Caterham.tscn")
+#var Car: PackedScene = preload("res://Scenes/Cars/Car 1.tscn")
 
 # The port we will listen to
 const PORT := 9080
