@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/Concesionaria/Concesionaria.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Podio/Podio.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Textures/TexturesCom_MetalFloorsBare0063_2_seamless_S.jpg" type="Texture" id=3]
+[ext_resource path="res://Scenes/Concesionaria/Concesionaria.gd" type="Script" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 3 )
@@ -18,7 +18,7 @@ material = SubResource( 1 )
 size = Vector2( 200, 200 )
 
 [node name="Concesionaria" type="Spatial"]
-script = ExtResource( 1 )
+script = ExtResource( 5 )
 
 [node name="Podiums" type="Spatial" parent="."]
 
