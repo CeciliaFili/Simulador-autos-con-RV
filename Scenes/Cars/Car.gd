@@ -3,16 +3,11 @@ extends VehicleBody
 ############################################################
 # Behaviour values
 
-#export var MAX_ENGINE_FORCE = 20*150.0
-#export var MAX_BRAKE_FORCE = 10.0
-#export var MAX_STEER_ANGLE = 0.35
-#
-#export var steer_speed = 1.0
-export var MAX_ENGINE_FORCE = 200.0
-export var MAX_BRAKE_FORCE = 5.0
-export var MAX_STEER_ANGLE = 0.5 #direccion. Cuanto gira 
+export(float) var MAX_ENGINE_FORCE = 200.0
+export(float) var MAX_BRAKE_FORCE = 5.0
+export(float) var MAX_STEER_ANGLE = 0.35 # ángulo de giro máxmimo de las ruedas
 
-export var steer_speed = 5.0
+export(float) var steer_speed = 5.0
 
 var steer_target = 0.0
 var steer_angle = 0.0
@@ -25,7 +20,7 @@ var had_throttle_or_brake_input = false
 var is_reverse = false
 var last_pos = Vector3(0.0, 0.0, 0.0)
 
-func get_speed_kph():
+func get_speed_kph() -> float:
 	return current_speed_mps * 3600.0 / 1000.0
 
 ############################################################
@@ -50,6 +45,7 @@ func _ready():
 func _physics_process(delta):
 	# how fast are we going in meters per second?
 	current_speed_mps = (translation - last_pos).length() / delta
+	#acá meter un aduio bus con pith proporcional a la velocidad con clamping
 	
 	# get our joystick inputs
 	var steer_val = steering_mult * Input.get_joy_axis(0, joy_steering)
@@ -78,9 +74,9 @@ func _physics_process(delta):
 		if Singleton.command.down:
 			brake_val = 1.0
 		if Singleton.command.left:
-			steer_val = 1.0
+			steer_val = Singleton.command.left_degree
 		elif Singleton.command.right:
-			steer_val = -1.0
+			steer_val = -Singleton.command.right_degree
 	
 	# check if we need to be in reverse
 	if (had_throttle_or_brake_input == false and brake_val > 0.0 and current_speed_mps < 1.0):

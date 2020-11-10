@@ -9,7 +9,9 @@ var command := {
 	"up": false,
 	"down": false,
 	"left": false,
-	"right": false
+	"left_degree": 0.0,
+	"right": false,
+	"right_degree": 0.0
 }
 
 var payload := {
@@ -48,7 +50,6 @@ func _disconnected(id, was_clean = false):
 
 func _on_data(id):
 	var pkt = _server.get_peer(id).get_packet()
-	#print("Got data from client %d: %s ... echoing" % [id, pkt.get_string_from_utf8()])
 	var data = JSON.parse(pkt.get_string_from_utf8())
 	if typeof(data.result) != TYPE_NIL:
 		data = data.result
@@ -58,6 +59,6 @@ func _on_data(id):
 		command.right = data.right
 
 func _process(_delta):
-	if state.connected:
+	if state.connected and payload.crash:
 		_server.get_peer(state.id).put_packet(JSON.print(payload).to_utf8())
 	_server.poll()
