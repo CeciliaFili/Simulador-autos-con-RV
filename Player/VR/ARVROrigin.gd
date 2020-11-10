@@ -11,7 +11,7 @@ func _ready():
 		get_viewport().arvr = true
 		get_viewport().hdr = false
 
-func _process(delta):	
+func _process(_delta):	
 	pass
 	
 #	

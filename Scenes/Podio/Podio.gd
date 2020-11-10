@@ -7,6 +7,7 @@ var Car: PackedScene = preload("res://Scenes/Cars/Caterham/Caterham.tscn")
 
 func _ready():
 	var car = Car.instance()
+	car.translation = $Podium/Platform/CarPoint.translation
 	$Podium/Platform.add_child(car)
 
 func focus_camera():
