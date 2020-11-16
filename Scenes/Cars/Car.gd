@@ -12,6 +12,8 @@ export(float) var steer_speed = 5.0
 var steer_target = 0.0
 var steer_angle = 0.0
 
+onready var audio = get_node("AudioStreamPlayer2")
+
 ############################################################
 # Speed and drive direction
 
@@ -20,8 +22,24 @@ var had_throttle_or_brake_input = false
 var is_reverse = false
 var last_pos = Vector3(0.0, 0.0, 0.0)
 
+const SPEED_THRESHOLD_MIN := 3.0
+const SPEED_THRESHOLD_MAX := 30.0
+const PITCH_MIN := 0.65
+const PITCH_MAX := 1.45
+const DB_MIN := -40.0
+const DB_MAX := 5.0
+
 func get_speed_kph() -> float:
 	return current_speed_mps * 3600.0 / 1000.0
+
+func get_audio_volume(speed: float) -> float:
+	if speed >= SPEED_THRESHOLD_MIN: 
+		return DB_MAX
+	else:
+		return lerp(DB_MIN, DB_MAX, inverse_lerp(0, SPEED_THRESHOLD_MIN, speed))
+
+func get_pitch(speed: float) -> float:
+	return lerp(PITCH_MIN, PITCH_MAX, inverse_lerp(0, SPEED_THRESHOLD_MAX, speed))
 
 ############################################################
 # Input
@@ -47,6 +65,9 @@ func _physics_process(delta):
 	current_speed_mps = (translation - last_pos).length() / delta
 	#acá meter un aduio bus con pith proporcional a la velocidad con clamping
 	
+	audio.volume_db = get_audio_volume(current_speed_mps)
+	audio.pitch_scale = get_pitch(current_speed_mps)
+	print(current_speed_mps)
 	# get our joystick inputs
 	var steer_val = steering_mult * Input.get_joy_axis(0, joy_steering)
 	var throttle_val = throttle_mult * Input.get_joy_axis(0, joy_throttle)

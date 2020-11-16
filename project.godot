@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Simulador Conecionaria"
+config/name="Simulador Conesionaria"
 config/description="Simulador de concecionaria donde uno puede tener una experiencia aproximada del vehículo que le interesa comprar. Orientado al comercio electrónico donde no existe la posibilidad de ir a una tienda física a comprobar detalles del vehículo."
 run/main_scene="res://Scenes/Concesionaria/Concesionaria.tscn"
 config/icon="res://icon.png"
