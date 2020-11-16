@@ -67,7 +67,7 @@ func _physics_process(delta):
 	
 	audio.volume_db = get_audio_volume(current_speed_mps)
 	audio.pitch_scale = get_pitch(current_speed_mps)
-	print(current_speed_mps)
+
 	# get our joystick inputs
 	var steer_val = steering_mult * Input.get_joy_axis(0, joy_steering)
 	var throttle_val = throttle_mult * Input.get_joy_axis(0, joy_throttle)

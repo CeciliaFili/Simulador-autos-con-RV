@@ -17,8 +17,16 @@ var command := {
 var payload := {
 	"crash": false
 }
+
+
 var Car: PackedScene = preload("res://Scenes/Cars/Caterham/Caterham.tscn")
 #var Car: PackedScene = preload("res://Scenes/Cars/Car 1.tscn")
+
+# Automatic Server IP Detection
+const UDP_BROADCAST_FREQUENCY: float = 3.0
+var udp_network: PacketPeerUDP
+var server_broadcasting_udp_port: int = 6868
+var _broadcast_timer = 0
 
 # The port we will listen to
 const PORT := 9080
@@ -36,6 +44,11 @@ func _ready():
 	if err != OK:
 		print("Unable to start server")
 		set_process(false)
+	
+	udp_network = PacketPeerUDP.new()
+	udp_network.set_broadcast_enabled(true)
+	print("IP:", IP.get_local_addresses())
+
 
 func _connected(id, proto):
 	print("Client %d connected with protocol: %s" % [id, proto])
@@ -47,6 +60,7 @@ func _close_request(id, code, reason):
 
 func _disconnected(id, was_clean = false):
 	print("Client %d disconnected, clean: %s" % [id, str(was_clean)])
+	state.connected = false
 
 func _on_data(id):
 	var pkt = _server.get_peer(id).get_packet()
@@ -57,8 +71,25 @@ func _on_data(id):
 		command.down = data.down
 		command.left = data.left
 		command.right = data.right
+		
+		if command.up or command.down:
+			print(command)
 
-func _process(_delta):
+func _process(delta):
 	if state.connected and payload.crash:
 		_server.get_peer(state.id).put_packet(JSON.print(payload).to_utf8())
 	_server.poll()
+
+	if not state.connected:
+		_broadcast_timer -= delta
+		if _broadcast_timer <= 0:
+			_broadcast_timer = UDP_BROADCAST_FREQUENCY
+
+			for address in IP.get_local_addresses():
+				var parts = address.split('.')
+				if (parts.size() == 4):
+					parts[3] = '255'
+					udp_network.set_dest_address(parts.join('.'), server_broadcasting_udp_port)
+					var error = udp_network.put_packet(address.to_ascii())
+					if error == 1:
+						print("Error while sending to ", address, ":", server_broadcasting_udp_port)
