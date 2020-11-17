@@ -71,9 +71,9 @@ func _on_data(id):
 		command.down = data.down
 		command.left = data.left
 		command.right = data.right
-		
-		if command.up or command.down:
-			print(command)
+		command.right_degree = data.right_degree
+		command.left_degree = data.left_degree
+
 
 func _process(delta):
 	if state.connected and payload.crash:
