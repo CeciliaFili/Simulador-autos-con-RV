@@ -138,3 +138,13 @@ func _physics_process(delta):
 	
 	# remember where we are
 	last_pos = translation
+
+
+func _on_body_entered(body):
+	Singleton.payload.crash = true
+	print("Crash Entered")
+
+
+func _on_body_exited(body):
+	Singleton.payload.crash = false
+	print("Crash Exited")
