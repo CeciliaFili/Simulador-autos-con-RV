@@ -21,7 +21,7 @@ func get_input():
 		print("right")
 		select_next()
 	if Input.is_action_just_pressed("ui_accept"):
-		var _scene = get_tree().change_scene("res://Scenes/Driving/Driving.tscn")
+		var _scene = get_tree().change_scene("res://Scenes/Driving/City.tscn")
 
 func select_next():
 	if current < podiums_amount - 1: 

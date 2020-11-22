@@ -54,9 +54,11 @@ export var brake_mult = 1.0
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	
 	if Singleton.state.connected and Singleton.state.driving:
 		print("Singleton connected, remote wheel enabled.")
 	if not Singleton.state.driving:
+		get_node("AudioStreamPlayer2").volume_db = -50.0
 		set_process(false)
 	pass
 
