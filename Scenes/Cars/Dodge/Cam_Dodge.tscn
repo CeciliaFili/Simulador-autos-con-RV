@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="ARVROrigin" type="ARVROrigin"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.27116, 0 )
+
+[node name="ARVRCamera" type="ARVRCamera" parent="."]

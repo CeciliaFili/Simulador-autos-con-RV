@@ -1,9 +1,7 @@
 
 extends Spatial
 
-#export (PackedScene) var Car
-var Car: PackedScene = preload("res://Scenes/Cars/Caterham/Caterham.tscn")
-
+export (PackedScene) var Car
 
 func _ready():
 	var car = Car.instance()
