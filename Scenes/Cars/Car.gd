@@ -12,8 +12,11 @@ export(float) var steer_speed = 5.0
 var steer_target = 0.0
 var steer_angle = 0.0
 
-onready var audio = get_node("AudioStreamPlayer2")
+var steer_angle_left_distortion := 1.0
+var steer_angle_right_distortion := 1.0
 
+onready var audio = get_node("AudioStreamPlayer2")
+var glass_broken_material = preload("res://Scenes/Cars/Caterham/glass_broken.material")
 ############################################################
 # Speed and drive direction
 
@@ -28,6 +31,8 @@ const PITCH_MIN := 0.65
 const PITCH_MAX := 1.45
 const DB_MIN := -40.0
 const DB_MAX := 5.0
+
+var CRASH_SOUND_ENABLED := false
 
 func get_speed_kph() -> float:
 	return current_speed_mps * 3600.0 / 1000.0
@@ -52,13 +57,18 @@ export var joy_brake = JOY_ANALOG_L2
 export var brake_mult = 1.0
 
 func _ready():
+	
 	# Called every time the node is added to the scene.
 	# Initialization here
-	
+	#get_node("glass").set_surface_material(0, glass_broken_material)
+	if Singleton.state.driving:
+		get_node("AudioStreamPlayer").play()
+		yield(get_tree().create_timer(1.0, true), "timeout")
+		CRASH_SOUND_ENABLED = true
 	if Singleton.state.connected and Singleton.state.driving:
 		print("Singleton connected, remote wheel enabled.")
 	if not Singleton.state.driving:
-		get_node("AudioStreamPlayer2").volume_db = -50.0
+		get_node("AudioStreamPlayer").volume_db = -50.0
 		set_process(false)
 	pass
 
@@ -88,18 +98,18 @@ func _physics_process(delta):
 		if Input.is_action_pressed("ui_down"):
 			brake_val = 1.0
 		if Input.is_action_pressed("ui_left"):
-			steer_val = 1.0
+			steer_val = 1.0 * steer_angle_left_distortion
 		elif Input.is_action_pressed("ui_right"):
-			steer_val = -1.0
+			steer_val = -1.0 * steer_angle_right_distortion
 	else:
 		if Singleton.command.up:
 			throttle_val = 1.0
 		if Singleton.command.down:
 			brake_val = 1.0
 		if Singleton.command.left:
-			steer_val = Singleton.command.left_degree
+			steer_val = Singleton.command.left_degree * steer_angle_left_distortion 
 		elif Singleton.command.right:
-			steer_val = -Singleton.command.right_degree
+			steer_val = -Singleton.command.right_degree * steer_angle_right_distortion
 	
 	# check if we need to be in reverse
 	if (had_throttle_or_brake_input == false and brake_val > 0.0 and current_speed_mps < 1.0):
@@ -141,10 +151,26 @@ func _physics_process(delta):
 
 
 func _on_body_entered(body):
-	Singleton.payload.crash = true
-	print("Crash Entered")
+	
+	if CRASH_SOUND_ENABLED:
+		if current_speed_mps > 5.0:
+			$glass.visible = false
+			$glass_broken.visible = true
+		Singleton.payload.crash = true
+		get_node("AudioStreamPlayer3").play(0.75)
+		CRASH_SOUND_ENABLED = false
+		MAX_ENGINE_FORCE *= rand_range(0.8, 1.0)
+		steer_angle_left_distortion = clamp(rand_range(0.5, current_speed_mps), 0.25, 4)
+		steer_angle_right_distortion = clamp(rand_range(0.5, current_speed_mps), 0.25, 4)
+		yield(get_tree().create_timer(1.0, true), "timeout")
+		CRASH_SOUND_ENABLED = true
+		print("Crash Entered")
+		print(steer_angle_left_distortion)
+		print(steer_angle_right_distortion)
+		print(MAX_ENGINE_FORCE)
+	else:
+		Singleton.payload.crash = false
 
 
 func _on_body_exited(body):
 	Singleton.payload.crash = false
-	print("Crash Exited")
