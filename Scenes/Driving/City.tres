@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+uniform bool is_splashing = false;
+
+void fragment(){
+	if (is_splashing) {
+		float alpha = clamp(sin(TIME * 5.0) + 1.0, 0.0, 1.0);
+		COLOR = vec4(1.0, 0.0, 0.0, alpha);
+	} else {
+		COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+	}
+}"
+
+[resource]
+shader = SubResource( 8 )
+shader_param/is_splashing = false

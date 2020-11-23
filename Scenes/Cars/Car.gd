@@ -162,12 +162,11 @@ func _on_body_entered(body):
 		MAX_ENGINE_FORCE *= rand_range(0.8, 1.0)
 		steer_angle_left_distortion = clamp(rand_range(0.5, current_speed_mps), 0.25, 4)
 		steer_angle_right_distortion = clamp(rand_range(0.5, current_speed_mps), 0.25, 4)
-		yield(get_tree().create_timer(1.0, true), "timeout")
+		$"../Splash".material.set_shader_param("is_splashing", true)
+		yield(get_tree().create_timer(1.0, true), "timeout")		
 		CRASH_SOUND_ENABLED = true
-		print("Crash Entered")
-		print(steer_angle_left_distortion)
-		print(steer_angle_right_distortion)
-		print(MAX_ENGINE_FORCE)
+		yield(get_tree().create_timer(1.0, true), "timeout")
+		$"../Splash".material.set_shader_param("is_splashing", false)
 	else:
 		Singleton.payload.crash = false
 

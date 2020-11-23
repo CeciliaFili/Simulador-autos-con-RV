@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Driving/Driving.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/TexturesCom_FloorsRegular0193_1_seamless_S.jpg" type="Texture" id=2]
 [ext_resource path="res://Assets/World/Building_material.tres" type="Material" id=3]
 [ext_resource path="res://Assets/Textures/hdrihaven_com_kiara_3_morning.jpg" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Driving/City.tres" type="Material" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.631373, 0.603922, 0.564706, 1 )
@@ -15,7 +17,8 @@ material = SubResource( 1 )
 size = Vector2( 1000, 1000 )
 
 [sub_resource type="BoxShape" id=3]
-extents = Vector3( 500, 0.015, 500 )
+margin = 0.5
+extents = Vector3( 100, 0.015, 100 )
 
 [sub_resource type="CubeMesh" id=4]
 material = ExtResource( 3 )
@@ -59,7 +62,6 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Suelo"]
-transform = Transform( 1, 0, 0, 0, 0.143459, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 3 )
 
 [node name="Building_1" type="StaticBody" parent="."]
@@ -163,7 +165,13 @@ material/0 = null
 shape = SubResource( 5 )
 
 [node name="CarPoint" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0245, 0.913421, 7.43395 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0245, 0.883726, 7.43395 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 7 )
+
+[node name="Splash" type="Sprite" parent="."]
+material = ExtResource( 6 )
+position = Vector2( 512, 300 )
+scale = Vector2( 16, 9.4 )
+texture = ExtResource( 5 )
