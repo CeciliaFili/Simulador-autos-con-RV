@@ -15,7 +15,7 @@ material = SubResource( 1 )
 size = Vector2( 1000, 1000 )
 
 [sub_resource type="BoxShape" id=3]
-extents = Vector3( 50.2623, 0.0152533, 50.1567 )
+extents = Vector3( 500, 0.015, 500 )
 
 [sub_resource type="CubeMesh" id=4]
 material = ExtResource( 3 )
