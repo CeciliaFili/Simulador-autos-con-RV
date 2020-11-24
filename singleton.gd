@@ -34,10 +34,11 @@ const PORT := 9080
 var _server := WebSocketServer.new()
 
 func _ready():
-	_server.connect("client_connected", self, "_connected")
-	_server.connect("client_disconnected", self, "_disconnected")
-	_server.connect("client_close_request", self, "_close_request")
-	_server.connect("data_received", self, "_on_data")
+	var _err
+	_err = _server.connect("client_connected", self, "_connected")
+	_err = _server.connect("client_disconnected", self, "_disconnected")
+	_err = _server.connect("client_close_request", self, "_close_request")
+	_err = _server.connect("data_received", self, "_on_data")
 	# Start listening on the given port.
 	var err = _server.listen(PORT)
 	print("WS STATUS CODE: ", err)
@@ -76,8 +77,9 @@ func _on_data(id):
 
 
 func _process(delta):
+	var _err
 	if state.connected and payload.crash:
-		_server.get_peer(state.id).put_packet(JSON.print(payload).to_utf8())
+		_err = _server.get_peer(state.id).put_packet(JSON.print(payload).to_utf8())
 	_server.poll()
 
 	if not state.connected:
@@ -89,7 +91,7 @@ func _process(delta):
 				var parts = address.split('.')
 				if (parts.size() == 4):
 					parts[3] = '255'
-					udp_network.set_dest_address(parts.join('.'), server_broadcasting_udp_port)
+					_err = udp_network.set_dest_address(parts.join('.'), server_broadcasting_udp_port)
 					var error = udp_network.put_packet(address.to_ascii())
 					if error == 1:
 						print("Error while sending to ", address, ":", server_broadcasting_udp_port)

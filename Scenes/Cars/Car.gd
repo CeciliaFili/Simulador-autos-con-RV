@@ -150,7 +150,7 @@ func _physics_process(delta):
 	last_pos = translation
 
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	
 	if CRASH_SOUND_ENABLED:
 		if current_speed_mps > 5.0:
@@ -171,5 +171,5 @@ func _on_body_entered(body):
 		Singleton.payload.crash = false
 
 
-func _on_body_exited(body):
+func _on_body_exited(_body):
 	Singleton.payload.crash = false
